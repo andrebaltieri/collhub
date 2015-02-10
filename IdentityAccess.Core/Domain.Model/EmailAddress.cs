@@ -11,7 +11,7 @@ namespace IdentityAccess.Core.Domain.Model
     {
         const string PATTERN = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
 
-        public string Address { get; private set; }
+        public string Email { get; private set; }
 
         protected EmailAddress() { }
 
@@ -21,7 +21,7 @@ namespace IdentityAccess.Core.Domain.Model
             AssertionConcern.AssertArgumentLength(address, 1, 100, "Email address must be 100 characters or less.");
             AssertionConcern.AssertArgumentMatches(PATTERN, address, "Email address format is invalid.");
 
-            this.Address = address;
+            this.Email = address;
         }
     }
 }

@@ -8,7 +8,7 @@ using BetterSpecs;
 using IdentityAccess.Core;
 using IdentityAccess.Core.Domain.Model;
 using SharedKernel.Domain.Model;
-using IdentityAccess.Core.Domain.Model.Events;
+using IdentityAccess.Core.Domain.Model.Event;
 
 namespace IdentityAccess.Tests.Spec
 {

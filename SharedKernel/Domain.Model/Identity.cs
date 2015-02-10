@@ -10,14 +10,14 @@ namespace SharedKernel.Domain.Model
     {
         public Identity()
         {
-            this.Id = Guid.NewGuid().ToString();
+            this.Id = Guid.NewGuid();
         }
 
-        public Identity(string id)
+        public Identity(Guid id)
         {
             this.Id = id;
         }
 
-        public string Id { get; protected set; }
+        public Guid Id { get; protected set; }
     }
 }

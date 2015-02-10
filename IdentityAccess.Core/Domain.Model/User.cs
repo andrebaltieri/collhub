@@ -1,4 +1,4 @@
-﻿using IdentityAccess.Core.Domain.Model.Events;
+﻿using IdentityAccess.Core.Domain.Model.Event;
 using SharedKernel.Domain.Model;
 using System;
 using System.Collections.Generic;
@@ -10,9 +10,8 @@ namespace IdentityAccess.Core.Domain.Model
 {
     public class User : Entity
     {
-        public TenantId TenantId { get; private set; }
-        public string UserName { get; private set; }
-        public string PassWord { get; private set; }
+        public string Username { get; private set; }
+        public string Password { get; private set; }
         public EmailAddress EmailAddress { get; private set; }
 
         protected User() { }
@@ -22,9 +21,9 @@ namespace IdentityAccess.Core.Domain.Model
             AssertionConcern.AssertArgumentNotEmpty(userName, "user name is required");
             AssertionConcern.AssertArgumentNotEmpty(passWord, "password is required");
 
-            this.TenantId = tenantId;
-            this.UserName = userName;
-            this.PassWord = passWord;
+            this.Id = tenantId.Id;
+            this.Username = userName;
+            this.Password = passWord;
             this.EmailAddress = new EmailAddress(email);
 
             DomainEvents.Raise(new UserRegistered(this));

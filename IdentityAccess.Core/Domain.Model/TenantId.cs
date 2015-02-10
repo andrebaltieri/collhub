@@ -14,7 +14,7 @@ namespace IdentityAccess.Core.Domain.Model
         {
         }
 
-        public TenantId(string id)
+        public TenantId(Guid id)
             : base(id)
         {
         }

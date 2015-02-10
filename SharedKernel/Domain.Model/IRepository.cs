@@ -8,6 +8,6 @@ namespace SharedKernel.Domain.Model
 {
     public interface IRepository<TEntity> where TEntity: Entity
     {
-        IDataContext Context { get; }
+        IDataContext GetDataContext();
     }
 }

@@ -28,9 +28,16 @@ namespace SharedKernel.Domain.Model
 
         public static void Raise<T>(T args) where T : IDomainEvent
         {
-            if (Container != null)
-                foreach (var handler in Container.ResolveAll<IHandles<T>>())
-                    handler.Handle(args);
+            try
+            {
+                if (Container != null)
+                    foreach (var handler in Container.GetServices(typeof(T)))
+                        ((IHandles<T>)handler).Handle(args);
+            }
+            catch
+            {
+                //throw;
+            }
 
             if (actions != null)
                 foreach (var action in actions)

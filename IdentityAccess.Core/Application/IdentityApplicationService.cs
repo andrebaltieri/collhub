@@ -1,12 +1,11 @@
 ﻿using IdentityAccess.Core.Application.Commands;
 using IdentityAccess.Core.Domain.Model;
-using IdentityAccess.Core.Domain.Model.Repositories;
+using IdentityAccess.Core.Domain.Model.Repository;
 
 namespace IdentityAccess.Core.Application
 {
     public class IdentityApplicationService : IIdentityApplicationService
     {
-        private IUserRepository _userRepository;
         private ITenantRepository _tenantRepository;
 
         public IdentityApplicationService(ITenantRepository tenantRepository)
@@ -19,8 +18,9 @@ namespace IdentityAccess.Core.Application
             var tenant = new Tenant(command.FullName, string.Empty);
             var user = tenant.RegisterUser(command.UserName, command.Password, command.Email);
 
+            var context = _tenantRepository.GetDataContext();
             _tenantRepository.Register(tenant, user);
-            _tenantRepository.Context.Commit();
+            context.Commit();
 
             return user;
         }

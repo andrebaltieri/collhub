@@ -9,26 +9,29 @@ namespace IdentityAccess.Core.Domain.Model
 {
     public class Tenant : Entity
     {
-        public TenantId TenantId { get; private set; }
+        private TenantId _tenantId;
+
         public string Name { get; private set; }
         public bool Active { get; private set; }
         public DateTime Start { get; set; }
 
         protected Tenant() { }
 
-        public Tenant(TenantId tenantId, string name, string description, bool active)
+        public Tenant(TenantId tenantId, string name, bool active)
         {
             AssertionConcern.AssertArgumentNotNull(tenantId, "TenentId is required.");
             AssertionConcern.AssertArgumentNotEmpty(name, "The tenant name is required.");
             AssertionConcern.AssertArgumentLength(name, 1, 100, "The name must be 100 characters or less.");
 
-            this.TenantId = tenantId;
+            _tenantId = tenantId;
+            this.Id = tenantId.Id;
             this.Name = name;
             this.Active = active;
+            this.Start = DateTime.Now;
         }
 
         public Tenant(string name, string description)
-            : this(new TenantId(), name, description, true)
+            : this(new TenantId(), name, true)
         {
 
         }
@@ -36,7 +39,7 @@ namespace IdentityAccess.Core.Domain.Model
         public User RegisterUser(string username, string password, string email)
         {
             AssertionConcern.AssertStateTrue(this.Active, "Tenant is not active.");
-            return new User(this.TenantId, username, password, email);
+            return new User(_tenantId, username, password, email);
         }
     }
 }

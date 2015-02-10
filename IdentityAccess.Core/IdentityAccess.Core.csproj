@@ -39,9 +39,9 @@
     <Compile Include="Application\IIdentityApplicationService.cs" />
     <Compile Include="Application\IdentityApplicationService.cs" />
     <Compile Include="Domain.Model\EmailAddress.cs" />
-    <Compile Include="Domain.Model\Events\UserRegistered.cs" />
-    <Compile Include="Domain.Model\Repositories\ITenantRepository.cs" />
-    <Compile Include="Domain.Model\Repositories\IUserRepository.cs" />
+    <Compile Include="Domain.Model\Event\UserRegistered.cs" />
+    <Compile Include="Domain.Model\Repository\ITenantRepository.cs" />
+    <Compile Include="Domain.Model\Repository\IUserRepository.cs" />
     <Compile Include="Domain.Model\Tenant.cs" />
     <Compile Include="Domain.Model\TenantId.cs" />
     <Compile Include="Domain.Model\User.cs" />
