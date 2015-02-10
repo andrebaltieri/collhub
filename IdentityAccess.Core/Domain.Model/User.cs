@@ -1,4 +1,5 @@
 ﻿using IdentityAccess.Core.Domain.Model.Event;
+using IdentityAccess.Core.Domain.Model.Services;
 using SharedKernel.Domain.Model;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,14 @@ namespace IdentityAccess.Core.Domain.Model
 
         protected User() { }
 
-        public User(TenantId tenantId, string userName, string passWord, string email)
+        public User(TenantId tenantId, string userName, string password, string email)
         {
             AssertionConcern.AssertArgumentNotEmpty(userName, "user name is required");
-            AssertionConcern.AssertArgumentNotEmpty(passWord, "password is required");
+            AssertionConcern.AssertArgumentNotEmpty(password, "password is required");
 
             this.Id = tenantId.Id;
             this.Username = userName;
-            this.Password = passWord;
+            this.Password = password;
             this.EmailAddress = new EmailAddress(email);
 
             DomainEvents.Raise(new UserRegistered(this));

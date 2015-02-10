@@ -2,11 +2,6 @@
 using IdentityAccess.Core.Domain.Model.Repository;
 using IdentityAccess.Data.Context;
 using SharedKernel.Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IdentityAccess.Data.Repository
 {

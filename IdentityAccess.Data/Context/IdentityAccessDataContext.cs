@@ -2,12 +2,8 @@
 using IdentityAccess.Data.Mapping;
 using SharedKernel.Domain.Model;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IdentityAccess.Data.Context
 {
@@ -18,7 +14,7 @@ namespace IdentityAccess.Data.Context
 
         public IdentityAccessDataContext():base("AppDataContext")
         {
-
+            Database.SetInitializer<IdentityAccessDataContext>(new DropCreateDatabaseAlways<IdentityAccessDataContext>());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
