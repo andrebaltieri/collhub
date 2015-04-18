@@ -13,15 +13,12 @@ namespace Collhub.Mvc.Events
 
         public DomainNotificationHandle()
         {
-            if (HttpContext.Current.Items["InvalidDomainNotifications"] == null)
-                HttpContext.Current.Items["InvalidDomainNotifications"] = new List<DomainNotification>();
+                _notifications = new List<DomainNotification>();
         }
 
         public void Handle(DomainNotification args)
         {
-            _notifications = GetValue();
             _notifications.Add(args);
-            HttpContext.Current.Items["InvalidDomainNotifications"] = _notifications;
         }
 
         public List<DomainNotification> Notify()
@@ -31,7 +28,7 @@ namespace Collhub.Mvc.Events
 
         private List<DomainNotification> GetValue()
         {
-            return (List<DomainNotification>)HttpContext.Current.Items["InvalidDomainNotifications"];
+            return _notifications;
         }
 
 

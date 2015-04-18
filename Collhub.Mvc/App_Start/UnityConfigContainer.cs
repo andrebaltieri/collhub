@@ -22,7 +22,7 @@ namespace Collhub.Mvc
             container.RegisterType<ITenantRepository, TenantRepository>();
             container.RegisterType<IIdentityApplicationService, IdentityApplicationService>();
             container.RegisterType<IHandles<UserRegistered>, UserRegisteredHanle>();
-            container.RegisterType<IDomainNotificationHandle<DomainNotification>, DomainNotificationHandle>();
+            container.RegisterType<IDomainNotificationHandle<DomainNotification>, DomainNotificationHandle>(new HierarchicalLifetimeManager());
 
             return container;
         }
