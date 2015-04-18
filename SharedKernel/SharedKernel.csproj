@@ -38,12 +38,12 @@
     <Compile Include="Domain.Model\AssertionConcern.cs" />
     <Compile Include="Domain.Model\DomainEvents.cs" />
     <Compile Include="Domain.Model\Entity.cs" />
-    <Compile Include="Domain.Model\IDataContext.cs" />
+    <Compile Include="Domain.Model\Event\IDomainNotificationHandle.cs" />
+    <Compile Include="Domain.Model\Event\DomainNotification.cs" />
     <Compile Include="Domain.Model\IHandles.cs" />
     <Compile Include="Domain.Model\IContainer.cs" />
     <Compile Include="Domain.Model\Identity.cs" />
     <Compile Include="Domain.Model\IDomainEvent.cs" />
-    <Compile Include="Domain.Model\IRepository.cs" />
     <Compile Include="Domain.Model\ValueObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdentityAccess.Core.Domain.Model.Repository
 {
-    public interface ITenantRepository : IRepository<Tenant>
+    public interface ITenantRepository
     {
         void Register(Tenant tenant, User user);
     }

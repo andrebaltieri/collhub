@@ -18,11 +18,7 @@ namespace IdentityAccess.Data.Repository
         {
             _dataContext.Tenants.Add(tenant);
             _dataContext.Users.Add(user);
-        }
-
-        public IDataContext GetDataContext()
-        {
-            return (IDataContext)_dataContext;
+            _dataContext.SaveChanges();
         }
     }
 }

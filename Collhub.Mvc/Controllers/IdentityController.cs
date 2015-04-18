@@ -1,29 +1,50 @@
 ﻿using IdentityAccess.Core.Application;
 using IdentityAccess.Core.Application.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using SharedKernel.Domain.Model.Event;
 using System.Web.Mvc;
 
 namespace Collhub.Mvc.Controllers
 {
     public class IdentityController : Controller
     {
-        private readonly IIdentityApplicationService _identityApplicationService;
+        private readonly IIdentityApplicationService service;
+        private readonly IDomainNotificationHandle<DomainNotification> notification;
 
-        public IdentityController(IIdentityApplicationService identityApplicationService)
+        public IdentityController(
+            IIdentityApplicationService identityApplicationService,
+            IDomainNotificationHandle<DomainNotification> iDomainNotificationHandle)
         {
-            _identityApplicationService = identityApplicationService;
+            service = identityApplicationService;
+            notification = iDomainNotificationHandle;
         }
 
-        // GET: Identity
         public ActionResult Index()
         {
-            var register = new RegisterUserCommand("Yan de Lima Justino", "yanjustino", "yanlimaj@gmail.com", "master", "master");
-            _identityApplicationService.Register(register);
-
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Index(string email)
+        {
+            var command = new RegisterUserCommand(
+                fullName: "Yan de Lima Justino", 
+                username: "yanjustino",
+                email: email, 
+                password: "master", 
+                confirmpass: "master"
+            );
+
+            service.Register(command);
+
+            if (notification.HasNotifications())
+            {
+                foreach (var item in notification.Notify())
+                    ModelState.AddModelError("", item.Value);
+
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

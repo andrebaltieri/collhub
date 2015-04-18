@@ -1,9 +1,5 @@
 ﻿using SharedKernel.Domain.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IdentityAccess.Core.Domain.Model
 {
@@ -19,10 +15,6 @@ namespace IdentityAccess.Core.Domain.Model
 
         public Tenant(TenantId tenantId, string name, bool active)
         {
-            AssertionConcern.AssertArgumentNotNull(tenantId, "TenentId is required.");
-            AssertionConcern.AssertArgumentNotEmpty(name, "The tenant name is required.");
-            AssertionConcern.AssertArgumentLength(name, 1, 100, "The name must be 100 characters or less.");
-
             _tenantId = tenantId;
             this.Id = tenantId.Id;
             this.Name = name;
@@ -38,8 +30,24 @@ namespace IdentityAccess.Core.Domain.Model
 
         public User RegisterUser(string username, string password, string email)
         {
-            AssertionConcern.AssertStateTrue(this.Active, "Tenant is not active.");
+            if (!this.Active) throw new InvalidOperationException("Tenant is not active.");
+
             return new User(_tenantId, username, password, email);
+        }
+
+        public User RegisterFirstUser(string username, string password, string email)
+        {
+            return new User(_tenantId, username, password, email);
+        }
+
+        public override bool IsValid()
+        {
+            return AssertionConcern.IsValid
+            (
+                AssertionConcern.AssertArgumentNotNull(_tenantId, "TenentId is required."),
+                AssertionConcern.AssertArgumentNotEmpty(this.Name, "The tenant name is required."),
+                AssertionConcern.AssertArgumentLength(this.Name, 1, 100, "The name must be 100 characters or less.")
+            );
         }
     }
 }

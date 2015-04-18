@@ -41,8 +41,6 @@
     <Compile Include="Domain.Model\EmailAddress.cs" />
     <Compile Include="Domain.Model\Event\UserRegistered.cs" />
     <Compile Include="Domain.Model\Repository\ITenantRepository.cs" />
-    <Compile Include="Domain.Model\Repository\IUserRepository.cs" />
-    <Compile Include="Domain.Model\Services\PasswordService.cs" />
     <Compile Include="Domain.Model\Tenant.cs" />
     <Compile Include="Domain.Model\TenantId.cs" />
     <Compile Include="Domain.Model\User.cs" />

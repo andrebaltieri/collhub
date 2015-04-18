@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+   @Html.ValidationSummary(false);
+   
+   <input type="text" name="email" id="email" placeholder="informe seu email">
+   <br />
+   <input type="submit" value="Cadastrar" />
+}
+

@@ -21,13 +21,13 @@ namespace IdentityAccess.Tests.Spec
         [SetUp]
         public void before_each()
         {
-            DomainEvents.ClearCallbacks();
+            //DomainEvents.ClearCallbacks();
         }
 
         [Test]
         public void describe_register_user()
         {
-            before = () => DomainEvents.Register<UserRegistered>(u => expected = u.UserCreated);
+            //before = () => DomainEvents.Register<UserRegistered>(u => expected = u.UserCreated);
 
             context["when create a user"] = () =>
             {

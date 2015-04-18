@@ -1,6 +1,8 @@
 ﻿using IdentityAccess.Core.Application.Commands;
 using IdentityAccess.Core.Domain.Model;
+using IdentityAccess.Core.Domain.Model.Event;
 using IdentityAccess.Core.Domain.Model.Repository;
+using SharedKernel.Domain.Model;
 
 namespace IdentityAccess.Core.Application
 {
@@ -16,13 +18,16 @@ namespace IdentityAccess.Core.Application
         public User Register(RegisterUserCommand command)
         {
             var tenant = new Tenant(command.FullName, string.Empty);
-            var user = tenant.RegisterUser(command.UserName, command.Password, command.Email);
+            var user = tenant.RegisterFirstUser(command.UserName, command.Password, command.Email);
 
-            var context = _tenantRepository.GetDataContext();
-            _tenantRepository.Register(tenant, user);
-            context.Commit();
+            if (tenant.IsValid() && user.IsValid())
+            {
+                _tenantRepository.Register(tenant, user);
+                DomainEvents.Raise(new UserRegistered(user));
+                return user;
+            }
 
-            return user;
+            return null;
         }
     }
 }
