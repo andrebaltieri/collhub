@@ -22,13 +22,13 @@ namespace IdentityAccess.Core.Domain.Model
             this.Email = address;
         }
 
-        public override bool IsValid()
+        public bool IsValid()
         {
-            return AssertionConcern.IsValid
+            return AssertionConcern.IsSatisfiedBy
             (
-                AssertionConcern.AssertArgumentNotEmpty(this.Email, "The email address is required."),
-                AssertionConcern.AssertArgumentLength(this.Email, 1, 100, "Email address must be 100 characters or less."),
-                AssertionConcern.AssertArgumentMatches(PATTERN, this.Email, "Email address format is invalid.")
+                AssertionConcern.AssertNotEmpty(this.Email, "The email address is required."),
+                AssertionConcern.AssertLength(this.Email, 1, 100, "Email address must be 100 characters or less."),
+                AssertionConcern.AssertMatches(PATTERN, this.Email, "Email address format is invalid.")
             );
         }
     }

@@ -3,6 +3,7 @@ using IdentityAccess.Core.Domain.Model;
 using IdentityAccess.Core.Domain.Model.Event;
 using IdentityAccess.Core.Domain.Model.Repository;
 using SharedKernel.Domain.Model;
+using IdentityAccess.Core.Domain.Model.Scopes;
 
 namespace IdentityAccess.Core.Application
 {
@@ -18,9 +19,9 @@ namespace IdentityAccess.Core.Application
         public User Register(RegisterUserCommand command)
         {
             var tenant = new Tenant(command.FullName, string.Empty);
-            var user = tenant.RegisterFirstUser(command.UserName, command.Password, command.Email);
+            var user = tenant.RegisterTenantUser(command.UserName, command.Password, command.Email);
 
-            if (tenant.IsValid() && user.IsValid())
+            if (tenant.IsValid(user))
             {
                 _tenantRepository.Register(tenant, user);
                 DomainEvents.Raise(new UserRegistered(user));

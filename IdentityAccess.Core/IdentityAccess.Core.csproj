@@ -41,9 +41,12 @@
     <Compile Include="Domain.Model\EmailAddress.cs" />
     <Compile Include="Domain.Model\Event\UserRegistered.cs" />
     <Compile Include="Domain.Model\Repository\ITenantRepository.cs" />
+    <Compile Include="Domain.Model\Scopes\TenantScope.cs" />
+    <Compile Include="Domain.Model\Scopes\UserScope.cs" />
     <Compile Include="Domain.Model\Tenant.cs" />
     <Compile Include="Domain.Model\TenantId.cs" />
     <Compile Include="Domain.Model\User.cs" />
+    <Compile Include="Domain.Model\UserId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

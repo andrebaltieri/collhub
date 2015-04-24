@@ -1,5 +1,7 @@
 ﻿using SharedKernel.Domain.Model.Event;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -7,71 +9,56 @@ namespace SharedKernel.Domain.Model
 {
     public static class AssertionConcern
     {
-
-        public static bool IsValid(params DomainNotification[] validations)
+        public static bool IsSatisfiedBy(params DomainNotification[] validations)
         {
-            if (validations.Count(x => x != null) == 0)
-                return true;
+            var notificationsNotNull = validations.Where(validation => validation != null);
+            NotifyAll(notificationsNotNull);
 
-            foreach (var item in validations)
-            {
-                if (item == null) continue;
-                DomainEvents.Notify<DomainNotification>(item);
-            }
-
-            return false;
+            return notificationsNotNull.Count().Equals(0);
         }
 
-        public static DomainNotification AssertArgumentLength(string stringValue, int minimum, int maximum, string message)
+        private static void NotifyAll(IEnumerable<DomainNotification> notifications)
+        {
+            notifications.ToList().ForEach(validation =>
+            {
+                DomainEvents.Notify<DomainNotification>(validation);
+            });
+        }
+
+        public static DomainNotification AssertLength(string stringValue, int minimum, int maximum, string message)
         {
             int length = stringValue.Trim().Length;
-            if (length < minimum || length > maximum)
-            {
-                return new DomainNotification("AssertArgumentLength", message);
-            }
-            return null;
+
+            return (length < minimum || length > maximum) ?
+                new DomainNotification("AssertArgumentLength", message) : null;
         }
 
-        public static DomainNotification AssertArgumentMatches(string pattern, string stringValue, string message)
+        public static DomainNotification AssertMatches(string pattern, string stringValue, string message)
         {
             Regex regex = new Regex(pattern);
 
-            if (!regex.IsMatch(stringValue))
-            {
-                return new DomainNotification("AssertArgumentLength", message);
-            }
-            return null;
+            return (!regex.IsMatch(stringValue)) ?
+                new DomainNotification("AssertArgumentLength", message) : null;
         }
 
-        public static DomainNotification AssertArgumentNotEmpty(string stringValue, string message)
+        public static DomainNotification AssertNotEmpty(string stringValue, string message)
         {
-            if (stringValue == null || stringValue.Trim().Length == 0)
-            {
-                return new DomainNotification("AssertArgumentNotEmpty", message);
-            }
-            return null;
+            return (stringValue == null || stringValue.Trim().Length == 0) ?
+                new DomainNotification("AssertArgumentNotEmpty", message) : null;
         }
 
-        public static DomainNotification AssertArgumentNotNull(object object1, string message)
+        public static DomainNotification AssertNotNull(object object1, string message)
         {
 
-            if (object1 == null)
-            {
-                return new DomainNotification("AssertArgumentNotNull", message);
-            }
-            return null;
+            return (object1 == null) ?
+                new DomainNotification("AssertArgumentNotNull", message) : null;
         }
 
-        public static DomainNotification AssertArgumentTrue(bool boolValue, string message)
+        public static DomainNotification AssertTrue(bool boolValue, string message)
         {
-            if (!boolValue)
-            {
-                return new DomainNotification("AssertArgumentTrue", message);
-
-            }
-            return null;
+            return (!boolValue) ?
+                new DomainNotification("AssertArgumentTrue", message) : null;
         }
-
     }
 }
 
